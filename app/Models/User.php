@@ -52,4 +52,6 @@ class User extends Authenticatable
     public function getAllAuthorPosts(){
         return $this->hasMany(blogPosts::class);
     }
+
+    
 }

@@ -53,13 +53,40 @@ Route::get('/', function () {
         // });
 
 
-        Route::resource('jobs',JobController::class,[
-          //  'except' => ['edit']
-          'only' => ['index','show','create','store']
-        ]);
+        // Route::resource('jobs',JobController::class,[
+        //   //  'except' => ['edit']
+        //   'only' => ['index','show','create','store']
+        // ]); 
 
 Route::get('/contact', function () {
     return view('contact');});
+
+
+
+
+//index
+ Route::get('/jobs',[JobController::class,'index']);
+ Route::get('/jobs/create', [JobController::class,'create']);
+ //save job
+ Route::post('/jobs',[JobController::class,'store'])->middleware('auth');
+ //show
+ Route::get('/jobs/{job}', [JobController::class,'show']);
+ //edit
+ Route::get('/jobs/{job}/edit', [JobController::class,'edit'])
+    ->middleware('auth')
+    ->can('edit-job', 'job');
+ //update
+ Route::patch('/jobs/{job}', [JobController::class,'update']);
+ //destroy {no need to add /delete}
+ Route::delete('/jobs/{job}',[JobController::class,'destroy']);
+// Route::resource('jobs', JobController::class)->only(['index','show']);
+// Route::resource('jobs', JobController::class)->except(['index','show'])->middleare('auth');
+
+
+
+//    Route::delete('/jobs/{job}',[JobController::class,'destroy']);
+
+
 
 
     Route::get('/register',[RegisteredUserController::class, 'create']);
