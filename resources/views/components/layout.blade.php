@@ -17,7 +17,7 @@
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="icon.png">
-
+    @vite(['resources/css/app.css','resources/js/app.js']);
     <link rel="manifest" href="site.webmanifest">
     <meta name="theme-color" content="#fafafa">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -47,7 +47,7 @@
                     <div class="hidden md:block">
                         <div class="ml-4 flex items-center md:ml-6">
                             @guest
-                                <x-navi-link type="a" href="/login" :active="request()->is('login')">Log In</x-navi-link>
+                                {{-- <x-navi-link type="a" href="/login" :active="request()->is('login')">Log In</x-navi-link> --}}
                                 <x-navi-link type="a" href="/register" :active="request()->is('register')">Register</x-navi-link>
                             @endguest
                             @auth

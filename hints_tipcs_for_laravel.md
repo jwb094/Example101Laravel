@@ -41,6 +41,9 @@ FIllable vs guarded
 Main topic is main assignment  - process of sending an array of data to be saved to a model at once
 
 
+Authorization
+
+Policies- policies connected to eloqient models "Like a Gate"
 
 
 
@@ -58,3 +61,13 @@ Route::get('/job/{job}', function (Job $job)
 
 <x-layout></x-layout>  == layout = layout.blade.php
 <x-form-field></x-form-field>  == components = form-field.blade.php
+
+
+Assets Build 
+
+- vite = preinstalled
+
+npm run biuld/dev
+HOT Reloading(HMR) - instant updates without reloading the pag or losing app state 
+
+A pick between vite pre install and Laravel mix

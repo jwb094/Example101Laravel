@@ -3,9 +3,33 @@
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\JobController;
+use App\Mail\JobPosted;
 use Illuminate\Support\Facades\Route;
 use App\Models\Job;
+use App\Jobs\TranslateJob;
 
+
+Route::get('/test',function(){
+    // //return new JobPosted();
+    // Illuminate\Support\Facades\Mail::to('jb230913@live.com')->send(
+    //     new JobPosted()
+    // );
+ 
+ 
+    // dispatch(function(){
+    //             logger('hello from the queue');
+    // })->delay(5);
+
+    // \App\Jobs\TranslateJob::dispatch();
+    $job = Job::first();
+
+    TranslateJob::dispatch($job);
+
+    return 'Done';
+
+
+
+});
 
 Route::get('/', function () {
     //  $jobs =  Job::all();
@@ -68,13 +92,15 @@ Route::get('/contact', function () {
  Route::get('/jobs',[JobController::class,'index']);
  Route::get('/jobs/create', [JobController::class,'create']);
  //save job
- Route::post('/jobs',[JobController::class,'store'])->middleware('auth');
+ Route::post('/jobs',[JobController::class,'store']);
+ //->middleware('auth');
  //show
  Route::get('/jobs/{job}', [JobController::class,'show']);
  //edit
  Route::get('/jobs/{job}/edit', [JobController::class,'edit'])
-    ->middleware('auth')
-    ->can('edit-job', 'job');
+    //->middleware('auth')
+    ->can('edit-job', 'job')
+    ;
  //update
  Route::patch('/jobs/{job}', [JobController::class,'update']);
  //destroy {no need to add /delete}
@@ -89,8 +115,8 @@ Route::get('/contact', function () {
 
 
 
-    Route::get('/register',[RegisteredUserController::class, 'create']);
-    Route::post('/register',[RegisteredUserController::class, 'store']);
-    Route::get('/login',[SessionController::class, 'create']);
-    Route::post('/login',[SessionController::class, 'store']);
-    Route::post('/logout',[SessionController::class, 'destroy']);
+    // Route::get('/register',[RegisteredUserController::class, 'create']);
+    // Route::post('/register',[RegisteredUserController::class, 'store']);
+    // Route::get('/login',[SessionController::class, 'create']);
+    // Route::post('/login',[SessionController::class, 'store']);
+    // Route::post('/logout',[SessionController::class, 'destroy']);

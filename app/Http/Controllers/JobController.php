@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Job;
 use App\Models\User;
 class JobController extends Controller
@@ -47,11 +48,15 @@ class JobController extends Controller
             'salary' => ['required'],
         ]);
     
-        Job::create([
+        $job  = Job::create([
             'title' => request('title'),
             'salary' => request('salary'),
             'employer_id' => 1  
         ]);
+
+        Mail::to($job->employer->user->email)->queue(
+            new \App\Mail\JobPosted($job)
+        );
     
         return redirect('/jobs');
     }
@@ -94,9 +99,9 @@ class JobController extends Controller
 
         
         //Not the same user who created the Job
-        // if($job->employer->user->isNot(Auth::user())){
-        //     abort(403);
-        // }
+        if($job->employer->user->isNot(Auth::user())){
+            abort(403);
+        }
 
         return view('jobs.edit', ['job' => $job]);
     }

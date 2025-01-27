@@ -28,9 +28,9 @@ class AppServiceProvider extends ServiceProvider
 
        // Paginator::useBootstrapFive();
         //Step DEfine Gates Inside AppService Providerss
-    //    Gate::define('edit-job',function(User $user, Job $job){
-    
-    // });
+       Gate::define('edit-job',function(User $user, Job $job){
+        return $job->employer->user->is($user);
+    });
 
     }
 }
